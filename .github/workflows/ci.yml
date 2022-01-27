@@ -49,7 +49,7 @@ jobs:
                   echo "x: ============="
                   echo "C:\Users\$env:username;$env:PATH"
                   echo "write to file: ====="
-                  echo "C:\Users\$env:username;$env:PATH" >> "$env:GITHUB_ENV"
+                  echo "C:\Users\$env:username;$env:PATH" >> $env:GITHUB_PATH
 
             # - name: Cache Go ${{ matrix.go }}
             #   id: cache-go
