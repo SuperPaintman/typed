@@ -55,14 +55,14 @@ func TestFilter(t *testing.T) {
 			got := Filter(tc.values, tc.fn)
 
 			if !reflect.DeepEqual(origin, tc.values) {
-				t.Errorf("Filter(%v) modified the original slice: %v",
+				t.Errorf("Filter[int](%v) modified the original slice: %v",
 					origin,
 					tc.values,
 				)
 			}
 
 			if !reflect.DeepEqual(got, tc.want) {
-				t.Errorf("Filter(%v) = %v, want %v", origin, got, tc.want)
+				t.Errorf("Filter[int](%v) = %v, want %v", origin, got, tc.want)
 			}
 		})
 	}
@@ -112,13 +112,13 @@ func TestFilterModify(t *testing.T) {
 			got := FilterModify(tc.values, tc.fn)
 
 			if !reflect.DeepEqual(got, tc.values[:len(got)]) {
-				t.Errorf("FilterModify(%v) did not modify the original slice",
+				t.Errorf("FilterModify[int](%v) did not modify the original slice",
 					tc.values,
 				)
 			}
 
 			if !reflect.DeepEqual(got, tc.want) {
-				t.Errorf("FilterModify(%v) = %v, want %v", tc.values, got, tc.want)
+				t.Errorf("FilterModify[int](%v) = %v, want %v", tc.values, got, tc.want)
 			}
 		})
 	}
