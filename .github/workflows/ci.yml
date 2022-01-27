@@ -14,8 +14,8 @@ jobs:
         strategy:
             matrix:
                 os:
-                    # - ubuntu-latest
-                    # - macos-latest
+                    - ubuntu-latest
+                    - macos-latest
                     - windows-latest
                 go:
                     - 1.18beta1
@@ -38,7 +38,7 @@ jobs:
 
                   git clone --branch=go${{ matrix.go }} --depth=1 https://github.com/golang/go.git $HOME/go${{ matrix.go }}
 
-                  if [ "${{ matrix.os }}" = "windows-latest" ]; then
+                  if [ "${{ runner.os }}" = "Windows" ]; then
                     (cd $HOME/go${{ matrix.go }}/src && ./make.bat)
                   else
                     (cd $HOME/go${{ matrix.go }}/src && ./make.bash)
