@@ -20,7 +20,7 @@ jobs:
                 go:
                     - 1.18beta1
         steps:
-            # - uses: actions/checkout@v2
+            - uses: actions/checkout@v2
 
             # - name: Cache Go ${{ matrix.go }}
             #   id: cache-go
@@ -30,68 +30,75 @@ jobs:
             #       key: tmp-tmp-tmp
             #       restore-keys: ${{ runner.os }}-go${{ matrix.go }}
 
+            # - name: Install ${{ matrix.go }}
+            #   run: |
+            #       echo "HOME: ============="
+            #       echo "C:\Users\$env:username"
+            #       echo "PATH: ============="
+            #       echo $env:PATH
+
+            #       echo "ls HOME: ============="
+            #       ls "C:\Users\$env:username"
+
+            #       echo "GITHUB_ENV: ============="
+            #       echo $env:GITHUB_ENV
+
+            #       echo "GITHUB_PATH: ============="
+            #       echo $env:GITHUB_PATH
+
+            #       echo "x: ============="
+            #       echo "C:\Users\$env:username;$env:PATH"
+            #       echo "write to file: ====="
+            #       echo "C:\Users\$env:username;$env:PATH" >> $env:GITHUB_PATH
+
+            - name: Cache Go ${{ matrix.go }}
+              id: cache-go
+              uses: actions/cache@v2
+              with:
+                  path: ~/go${{ matrix.go }}
+                  key: ${{ runner.os }}-go-${{ matrix.go }}
+
             - name: Install ${{ matrix.go }}
+              if: steps.cache-go.outputs.cache-hit != 'true'
+              shell: bash
               run: |
-                  echo "HOME: ============="
-                  echo "C:\Users\$env:username"
-                  echo "PATH: ============="
-                  echo $env:PATH
+                  set -eux
+                  set -o pipefail
 
-                  echo "ls HOME: ============="
-                  ls "C:\Users\$env:username"
+                  rm -rf $HOME/go${{ matrix.go }}
+                  git clone --branch=go${{ matrix.go }} --depth=1 https://github.com/golang/go.git $HOME/go${{ matrix.go }}
 
-                  echo "GITHUB_ENV: ============="
-                  echo $env:GITHUB_ENV
+                  if [ "${{ runner.os }}" = "Windows" ]; then
+                    (cd $HOME/go${{ matrix.go }}/src && ./make.bat)
+                  else
+                    (cd $HOME/go${{ matrix.go }}/src && ./make.bash)
+                  fi
+                  rm -rf $HOME/go${{ matrix.go }}/.git
 
-                  echo "GITHUB_PATH: ============="
-                  echo $env:GITHUB_PATH
+            - name: Update env (Unix)
+              if: runner.os != 'Windows'
+              shell: bash
+              run: |
+                  set -eux
+                  set -o pipefail
 
-                  echo "x: ============="
-                  echo "C:\Users\$env:username;$env:PATH"
-                  echo "write to file: ====="
+                  echo "GOROOT=$HOME/go${{ matrix.go }}" >> $GITHUB_ENV
+                  echo "$HOME/go${{ matrix.go }}/bin:$PATH" >> $GITHUB_PATH
+
+            - name: Update env (Windows)
+              if: runner.os == 'Windows'
+              run: |
+                  echo "GOROOT=C:\Users\$env:username\go${{ matrix.go }}" >> $env:GITHUB_ENV
                   echo "C:\Users\$env:username;$env:PATH" >> $env:GITHUB_PATH
 
-            # - name: Cache Go ${{ matrix.go }}
-            #   id: cache-go
-            #   uses: actions/cache@v2
-            #   with:
-            #       path: ~/go${{ matrix.go }}
-            #       key: ${{ runner.os }}-go${{ matrix.go }}
+            - name: Download Go dependencies
+              run: go mod download
 
-            # - name: Install ${{ matrix.go }}
-            #   if: steps.cache-go.outputs.cache-hit != 'true'
-            #   shell: bash
-            #   run: |
-            #       set -eux
-            #       set -o pipefail
+            - name: Set up Cover cmd
+              run: go get golang.org/x/tools/cmd/cover
 
-            #       rm -rf $HOME/go${{ matrix.go }}
-            #       git clone --branch=go${{ matrix.go }} --depth=1 https://github.com/golang/go.git $HOME/go${{ matrix.go }}
-
-            #       if [ "${{ runner.os }}" = "Windows" ]; then
-            #         (cd $HOME/go${{ matrix.go }}/src && ./make.bat)
-            #       else
-            #         (cd $HOME/go${{ matrix.go }}/src && ./make.bash)
-            #       fi
-            #       rm -rf $HOME/go${{ matrix.go }}/.git
-
-            #- name: Update env
-            #  shell: bash
-            #  run: |
-            #      set -eux
-            #      set -o pipefail
-
-            #      echo "GOROOT=$HOME/go${{ matrix.go }}" >> $GITHUB_ENV
-            #      echo "$HOME/go${{ matrix.go }}/bin:$PATH" >> $GITHUB_PATH
-
-            #- name: Download Go dependencies
-            #  run: go mod download
-
-            #- name: Set up Cover cmd
-            #  run: go get golang.org/x/tools/cmd/cover
-
-            #- name: Test
-            #  run: go test -race -covermode=atomic -coverprofile=coverage -v ./...
+            - name: Test
+              run: go test -race -covermode=atomic -coverprofile=coverage -v ./...
 
             # - name: Codecov
             #   uses: codecov/codecov-action@v2
