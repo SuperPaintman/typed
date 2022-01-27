@@ -26,7 +26,7 @@ jobs:
               id: cache-go
               uses: actions/cache@v2
               with:
-                  path: $HOME/go${{ matrix.go }}/bin
+                  path: ~/go${{ matrix.go }}/bin
                   key: ${{ runner.os }}-go${{ matrix.go }}
 
             - name: Install ${{ matrix.go }}
@@ -52,6 +52,8 @@ jobs:
                   ls -la
                   ls -la $HOME
                   ls -la $HOME/go${{ matrix.go }}
+                  ls -la ~/go${{ matrix.go }}
+                  ls -la ~/go${{ matrix.go }}/bin
 
                   echo "GOROOT=$HOME/go${{ matrix.go }}" >> $GITHUB_ENV
                   echo "$HOME/go${{ matrix.go }}/bin:$PATH" >> $GITHUB_PATH
