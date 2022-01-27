@@ -32,8 +32,6 @@ jobs:
 
             - name: Install ${{ matrix.go }}
               run: |
-                  chcp 65001
-
                   echo "HOME: ============="
                   echo "C:\Users\$env:username"
                   echo "PATH: ============="
@@ -51,7 +49,7 @@ jobs:
                   echo "x: ============="
                   echo "C:\Users\$env:username;$env:PATH"
                   echo "write to file: ====="
-                  echo ("C:\Users\$env:username;$env:PATH") >> $env:GITHUB_ENV
+                  echo "C:\Users\$env:username;$env:PATH" >> "$env:GITHUB_ENV"
 
             # - name: Cache Go ${{ matrix.go }}
             #   id: cache-go
