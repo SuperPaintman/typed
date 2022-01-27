@@ -32,6 +32,8 @@ jobs:
 
             - name: Install ${{ matrix.go }}
               run: |
+                  chcp 65001
+
                   echo "HOME: ============="
                   echo "C:\Users\$env:username"
                   echo "PATH: ============="
