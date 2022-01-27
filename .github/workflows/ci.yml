@@ -30,7 +30,7 @@ jobs:
                   key: ${{ runner.os }}-${{ matrix.go }}
 
             - name: Install ${{ matrix.go }}
-              if: steps.cache-go.outputs.cache-hit != 'true'
+              # if: steps.cache-go.outputs.cache-hit != 'true'
               shell: bash
               run: |
                   set -e
