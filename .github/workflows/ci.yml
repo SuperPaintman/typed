@@ -24,9 +24,10 @@ jobs:
 
             - name: Install ${{ matrix.go }}
               run: |
+                  echo "HOME: ============="
                   echo $env:HOME
-                  echo "============="
-                  echo $env:HOME;$env:PATH
+                  echo "PATH: ============="
+                  echo $env:PATH
 
             # - name: Cache Go ${{ matrix.go }}
             #   id: cache-go
