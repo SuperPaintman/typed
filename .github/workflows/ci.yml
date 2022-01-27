@@ -41,6 +41,9 @@ jobs:
                   echo "PATH: ============="
                   echo $env:PATH
 
+                  echo "ls HOME: ============="
+                  ls $env:HOME
+
             # - name: Cache Go ${{ matrix.go }}
             #   id: cache-go
             #   uses: actions/cache@v2
