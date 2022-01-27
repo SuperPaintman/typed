@@ -32,6 +32,10 @@ jobs:
 
             - name: Install ${{ matrix.go }}
               run: |
+                  $HOMEDRIVE = "C:\"
+                  $HOMEPATH = "Users\" + $env:username
+                  Set-Variable HOME "$HOMEDRIVE$HOMEPATH" -Force
+
                   echo "HOME: ============="
                   echo $env:HOME
                   echo "PATH: ============="
@@ -59,6 +63,7 @@ jobs:
             #       else
             #         (cd $HOME/go${{ matrix.go }}/src && ./make.bash)
             #       fi
+            #       rm -rf $HOME/go${{ matrix.go }}/.git
 
             #- name: Update env
             #  shell: bash
