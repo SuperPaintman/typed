@@ -29,25 +29,20 @@ jobs:
                   path: ~/go${{ matrix.go }}
                   key: ${{ runner.os }}-go${{ matrix.go }}--tmp-1
 
-            - name: Install ${{ matrix.go }} (Bash)
-              if: steps.cache-go.outputs.cache-hit != 'true' && matrix.os != 'windows-latest'
+            - name: Install ${{ matrix.go }}
+              if: steps.cache-go.outputs.cache-hit != 'true'
               shell: bash
               run: |
                   set -eux
                   set -o pipefail
 
                   git clone --branch=go${{ matrix.go }} --depth=1 https://github.com/golang/go.git $HOME/go${{ matrix.go }}
-                  (cd $HOME/go${{ matrix.go }}/src && ./make.bash)
 
-            - name: Install ${{ matrix.go }} (Bat)
-              if: steps.cache-go.outputs.cache-hit != 'true' && matrix.os == 'windows-latest'
-              shell: bash
-              run: |
-                  set -eux
-                  set -o pipefail
-
-                  git clone --branch=go${{ matrix.go }} --depth=1 https://github.com/golang/go.git $HOME/go${{ matrix.go }}
-                  (cd $HOME/go${{ matrix.go }}/src && ./make.bat)
+                  if [ "${{ matrix.os }}" = "windows-latest" ]; then
+                    (cd $HOME/go${{ matrix.go }}/src && ./make.bat)
+                  else
+                    (cd $HOME/go${{ matrix.go }}/src && ./make.bash)
+                  fi
 
             - name: Update env
               shell: bash
