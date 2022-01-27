@@ -29,15 +29,15 @@ jobs:
             #       path: $HOME/go${{ matrix.go }}
             #       key: ${{ runner.os }}-${{ matrix.go }}
 
-            # - name: Install ${{ matrix.go }}
-            #   if: steps.cache-${{ matrix.go }}.outputs.cache-hit != 'true'
-            #   run: |
-            #       set -e
-            #       set -u
-            #       set -o pipefail
+            - name: Install ${{ matrix.go }}
+              if: steps.cache-${{ matrix.go }}.outputs.cache-hit != 'true'
+              run: |
+                  set -e
+                  set -u
+                  set -o pipefail
 
-            #       git clone --branch=go${{ matrix.go }} --depth=1 https://github.com/golang/go.git $HOME/go${{ matrix.go }}
-            #       (cd $HOME/go${{ matrix.go }}/src && ./make.bash)
+                  git clone --branch=go${{ matrix.go }} --depth=1 https://github.com/golang/go.git $HOME/go${{ matrix.go }}
+                  (cd $HOME/go${{ matrix.go }}/src && ./make.bash)
 
             # - name: Update env
             #   run: |
