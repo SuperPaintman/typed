@@ -1,9 +1,9 @@
 # typed [🇹]
 
-`typed` is a typed Go stdlib (almost).
+`typed` is a typed Go stdlib (almost) for generics.
 
 > It is a set of experimental packages that heavily use features of
-> [Go 1.18](https://tip.golang.org/doc/go1.18).
+> [Go 1.18](https://tip.golang.org/doc/go1.18) generics.
 
 ---
 
