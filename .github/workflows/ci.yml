@@ -22,12 +22,12 @@ jobs:
         steps:
             - uses: actions/checkout@v2
 
-            # - name: Cache Go ${{ matrix.go }}
-            #   id: cache-go-${{ matrix.go }}
-            #   uses: actions/cache@v2
-            #   with:
-            #       path: $HOME/go${{ matrix.go }}
-            #       key: ${{ runner.os }}-${{ matrix.go }}
+            - name: Cache Go ${{ matrix.go }}
+              id: cache-go-${{ matrix.go }}
+              uses: actions/cache@v2
+              with:
+                  path: $HOME/go${{ matrix.go }}
+                  key: ${{ runner.os }}-${{ matrix.go }}
 
             - name: Install ${{ matrix.go }}
               if: steps.cache-${{ matrix.go }}.outputs.cache-hit != 'true'
