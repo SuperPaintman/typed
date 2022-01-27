@@ -26,7 +26,7 @@ jobs:
               id: cache-go
               uses: actions/cache@v2
               with:
-                  path: $HOME/go${{ matrix.go }}
+                  path: $HOME/go${{ matrix.go }}/bin
                   key: ${{ runner.os }}-${{ matrix.go }}
 
             - name: Install ${{ matrix.go }}
