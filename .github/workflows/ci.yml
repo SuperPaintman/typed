@@ -27,7 +27,7 @@ jobs:
               uses: actions/cache@v2
               with:
                   path: $HOME/go${{ matrix.go }}/bin
-                  key: ${{ runner.os }}-${{ matrix.go }}
+                  key: ${{ runner.os }}-go${{ matrix.go }}
 
             - name: Install ${{ matrix.go }}
               # if: steps.cache-go.outputs.cache-hit != 'true'
