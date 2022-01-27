@@ -47,6 +47,9 @@ jobs:
                   set -u
                   set -o pipefail
 
+                  ls $HOME
+                  ls $HOME/go${{ matrix.go }}
+
                   echo "GOROOT=$HOME/go${{ matrix.go }}" >> $GITHUB_ENV
                   echo "$HOME/go${{ matrix.go }}/bin:$PATH" >> $GITHUB_PATH
 
