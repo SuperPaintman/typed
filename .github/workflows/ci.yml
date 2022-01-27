@@ -18,7 +18,7 @@ jobs:
                     - macos-latest
                     # - windows-latest
                 go:
-                    - "1.18beta1"
+                    - 1.18beta1
         steps:
             - uses: actions/checkout@v2
 
@@ -29,8 +29,8 @@ jobs:
                   path: $HOME/go${{ matrix.go }}
                   key: ${{ runner.os }}-${{ matrix.go }}
 
-            - name: Install 1.18beta1
-              if: steps.cache-go-1-18beta1.outputs.cache-hit != 'true'
+            - name: Install ${{ matrix.go }}
+              if: steps.cache-${{ matrix.go.replace('.', '-') }}.outputs.cache-hit != 'true'
               run: |
                   set -e
                   set -u
