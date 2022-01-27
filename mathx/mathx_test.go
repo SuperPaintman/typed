@@ -51,6 +51,41 @@ func TestMax_int(t *testing.T) {
 	}
 }
 
+func TestMax_rune(t *testing.T) {
+	tt := []maxMinTestCase[rune]{
+		{
+			x:    'a',
+			y:    'a',
+			want: 'a',
+		},
+		{
+			x:    'a',
+			y:    'b',
+			want: 'b',
+		},
+		{
+			x:    'b',
+			y:    'a',
+			want: 'b',
+		},
+	}
+
+	for _, tc := range tt {
+		t.Run(fmt.Sprintf("%c > %c", tc.x, tc.y), func(t *testing.T) {
+			got := Max(tc.x, tc.y)
+
+			if got != tc.want {
+				t.Errorf("Max[rune](%c, %c) = %c, want = %c",
+					tc.x,
+					tc.y,
+					got,
+					tc.want,
+				)
+			}
+		})
+	}
+}
+
 func TestMax_string(t *testing.T) {
 	tt := []maxMinTestCase[string]{
 		{
@@ -126,6 +161,41 @@ func TestMin_int(t *testing.T) {
 
 			if got != tc.want {
 				t.Errorf("Min[int](%d, %d) = %d, want = %d",
+					tc.x,
+					tc.y,
+					got,
+					tc.want,
+				)
+			}
+		})
+	}
+}
+
+func TestMin_rune(t *testing.T) {
+	tt := []maxMinTestCase[rune]{
+		{
+			x:    'a',
+			y:    'a',
+			want: 'a',
+		},
+		{
+			x:    'a',
+			y:    'b',
+			want: 'a',
+		},
+		{
+			x:    'b',
+			y:    'a',
+			want: 'a',
+		},
+	}
+
+	for _, tc := range tt {
+		t.Run(fmt.Sprintf("%c < %c", tc.x, tc.y), func(t *testing.T) {
+			got := Min(tc.x, tc.y)
+
+			if got != tc.want {
+				t.Errorf("Min[rune](%c, %c) = %c, want = %c",
 					tc.x,
 					tc.y,
 					got,
