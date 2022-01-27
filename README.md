@@ -25,6 +25,34 @@ func main() {
 }
 ```
 
+```go
+package main
+
+import (
+  "fmt"
+  "github.com/SuperPaintman/typed/containerx/stackx"
+)
+
+func main() {
+  var stack stackx.Stack[int]
+
+  stack = append(stack, 7331)
+  stack = append(stack, 1337)
+
+  v1, ok := stack.Pop()
+  fmt.Printf("v1: %d, ok: %v\n", v1, ok)
+  // Output: v1: 1337, ok: true
+
+  v2, ok := stack.Pop()
+  fmt.Printf("v2: %d, ok: %v\n", v2, ok)
+  // Output: v2: 7331, ok: true
+
+  v3, ok := stack.Pop()
+  fmt.Printf("v3: %d, ok: %v\n", v3, ok)
+  // Output: v3: 0, ok: false
+}
+```
+
 ---
 
 ## FAQ
