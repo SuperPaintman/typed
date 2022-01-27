@@ -48,7 +48,8 @@ jobs:
 
                   echo "x: ============="
                   echo "C:\Users\$env:username;$env:PATH"
-                  echo "C:\Users\$env:username;$env:PATH" | Out-File -FilePath $env:GITHUB_ENV
+                  echo "write to file: ====="
+                  echo ("C:\Users\$env:username;$env:PATH") >> $env:GITHUB_ENV
 
             # - name: Cache Go ${{ matrix.go }}
             #   id: cache-go
