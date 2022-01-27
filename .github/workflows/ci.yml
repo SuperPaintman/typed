@@ -36,6 +36,7 @@ jobs:
                   set -eux
                   set -o pipefail
 
+                  rm -rf $HOME/go${{ matrix.go }}
                   git clone --branch=go${{ matrix.go }} --depth=1 https://github.com/golang/go.git $HOME/go${{ matrix.go }}
 
                   if [ "${{ runner.os }}" = "Windows" ]; then
