@@ -27,7 +27,7 @@ jobs:
               uses: actions/cache@v2
               with:
                   path: ~/go${{ matrix.go }}
-                  key: ${{ runner.os }}-go${{ matrix.go }}--tmp-1
+                  key: ${{ runner.os }}-go${{ matrix.go }}
 
             - name: Install ${{ matrix.go }}
               if: steps.cache-go.outputs.cache-hit != 'true'
@@ -44,23 +44,23 @@ jobs:
                     (cd $HOME/go${{ matrix.go }}/src && ./make.bash)
                   fi
 
-            - name: Update env
-              shell: bash
-              run: |
-                  set -eux
-                  set -o pipefail
+            #- name: Update env
+            #  shell: bash
+            #  run: |
+            #      set -eux
+            #      set -o pipefail
 
-                  echo "GOROOT=$HOME/go${{ matrix.go }}" >> $GITHUB_ENV
-                  echo "$HOME/go${{ matrix.go }}/bin:$PATH" >> $GITHUB_PATH
+            #      echo "GOROOT=$HOME/go${{ matrix.go }}" >> $GITHUB_ENV
+            #      echo "$HOME/go${{ matrix.go }}/bin:$PATH" >> $GITHUB_PATH
 
-            - name: Download Go dependencies
-              run: go mod download
+            #- name: Download Go dependencies
+            #  run: go mod download
 
-            - name: Set up Cover cmd
-              run: go get golang.org/x/tools/cmd/cover
+            #- name: Set up Cover cmd
+            #  run: go get golang.org/x/tools/cmd/cover
 
-            - name: Test
-              run: go test -race -covermode=atomic -coverprofile=coverage -v ./...
+            #- name: Test
+            #  run: go test -race -covermode=atomic -coverprofile=coverage -v ./...
 
             # - name: Codecov
             #   uses: codecov/codecov-action@v2
