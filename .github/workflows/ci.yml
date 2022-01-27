@@ -22,9 +22,9 @@ jobs:
         steps:
             - uses: actions/checkout@v2
 
-             - name: Install ${{ matrix.go }}
-               run: |
-                   echo $env:PATH
+            - name: Install ${{ matrix.go }}
+              run: |
+                  echo $env:PATH
 
             # - name: Cache Go ${{ matrix.go }}
             #   id: cache-go
