@@ -26,15 +26,14 @@ jobs:
               id: cache-go
               uses: actions/cache@v2
               with:
-                  path: ~/go${{ matrix.go }}/bin
+                  path: ~/go${{ matrix.go }}
                   key: ${{ runner.os }}-go${{ matrix.go }}--tmp-1
 
             - name: Install ${{ matrix.go }}
               if: steps.cache-go.outputs.cache-hit != 'true'
               shell: bash
               run: |
-                  set -e
-                  set -u
+                  set -eux
                   set -o pipefail
 
                   git clone --branch=go${{ matrix.go }} --depth=1 https://github.com/golang/go.git $HOME/go${{ matrix.go }}
@@ -43,8 +42,7 @@ jobs:
             - name: Update env
               shell: bash
               run: |
-                  set -e
-                  set -u
+                  set -eux
                   set -o pipefail
 
                   pwd
