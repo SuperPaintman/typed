@@ -15,38 +15,38 @@ jobs:
             matrix:
                 os:
                     - ubuntu-latest
-                    - macos-latest
+                    # - macos-latest
                     # - windows-latest
                 go:
                     - 1.18beta1
         steps:
             - uses: actions/checkout@v2
 
-            - name: Cache Go ${{ matrix.go }}
-              id: cache-go-${{ matrix.go }}
-              uses: actions/cache@v2
-              with:
-                  path: $HOME/go${{ matrix.go }}
-                  key: ${{ runner.os }}-${{ matrix.go }}
+            # - name: Cache Go ${{ matrix.go }}
+            #   id: cache-go-${{ matrix.go }}
+            #   uses: actions/cache@v2
+            #   with:
+            #       path: $HOME/go${{ matrix.go }}
+            #       key: ${{ runner.os }}-${{ matrix.go }}
 
-            - name: Install ${{ matrix.go }}
-              if: steps.cache-${{ matrix.go }}.outputs.cache-hit != 'true'
-              run: |
-                  set -e
-                  set -u
-                  set -o pipefail
+            # - name: Install ${{ matrix.go }}
+            #   if: steps.cache-${{ matrix.go }}.outputs.cache-hit != 'true'
+            #   run: |
+            #       set -e
+            #       set -u
+            #       set -o pipefail
 
-                  git clone --branch=go${{ matrix.go }} --depth=1 https://github.com/golang/go.git $HOME/go${{ matrix.go }}
-                  (cd $HOME/go${{ matrix.go }}/src && ./make.bash)
+            #       git clone --branch=go${{ matrix.go }} --depth=1 https://github.com/golang/go.git $HOME/go${{ matrix.go }}
+            #       (cd $HOME/go${{ matrix.go }}/src && ./make.bash)
 
-            - name: Update env
-              run: |
-                  set -e
-                  set -u
-                  set -o pipefail
+            # - name: Update env
+            #   run: |
+            #       set -e
+            #       set -u
+            #       set -o pipefail
 
-                  echo "GOROOT=$HOME/go${{ matrix.go }}" >> $GITHUB_ENV
-                  echo "$HOME/go${{ matrix.go }}/bin:$PATH" >> $GITHUB_PATH
+            #       echo "GOROOT=$HOME/go${{ matrix.go }}" >> $GITHUB_ENV
+            #       echo "$HOME/go${{ matrix.go }}/bin:$PATH" >> $GITHUB_PATH
 
             - name: Download Go dependencies
               run: go mod download
