@@ -95,6 +95,39 @@ func TestNullable_UnmarshalJSON_int(t *testing.T) {
 	}
 }
 
+func TestNullable_UnmarshalJSON_int_invalid(t *testing.T) {
+	tt := []struct {
+		name string
+		v    string
+	}{
+		{
+			name: "1337a",
+			v:    "1337a",
+		},
+	}
+
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			var got Nullable[int]
+
+			if err := json.Unmarshal([]byte(tc.v), &got); err == nil {
+				t.Fatalf("json.Unmarshal(%q) = nil, want an error",
+					tc.v,
+				)
+			}
+
+			var want Nullable[int]
+			if got != want {
+				t.Fatalf("json.Unmarshal(%q) = %#v, want %#v",
+					tc.v,
+					got,
+					want,
+				)
+			}
+		})
+	}
+}
+
 func TestNullable_MarshalJSON_string(t *testing.T) {
 	tt := []struct {
 		name string
