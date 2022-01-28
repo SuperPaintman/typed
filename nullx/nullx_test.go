@@ -101,8 +101,8 @@ func TestNullable_UnmarshalJSON_int_invalid(t *testing.T) {
 		v    string
 	}{
 		{
-			name: "1337a",
-			v:    "1337a",
+			name: "invalid-type",
+			v:    "\"1337\"",
 		},
 	}
 
