@@ -53,6 +53,39 @@ func main() {
 }
 ```
 
+```go
+package main
+
+import (
+	"encoding/json"
+  "fmt"
+  "github.com/SuperPaintman/typed/nullx"
+)
+
+func main() {
+  var post struct {
+    Description nullx.Nullable[string]
+    Likes       nullx.Nullable[int]
+    Tags        nullx.NonNullableSlice[string]
+  }
+
+  if err := json.Unmarshal([]byte(`{ "likes": 0 }`), &post); err != nil {
+    panic(err)
+  }
+
+  fmt.Printf("%#v\n", post)
+  // Output: struct { Description nullx.Nullable[string]; Likes nullx.Nullable[int]; Tags nullx.NonNullableSlice[string] }{Description:nullx.Nullable[string]{Value:"", Valid:false}, Likes:nullx.Nullable[int]{Value:0, Valid:true}, Tags:nullx.NonNullableSlice[string](nil)}
+
+  b, err := json.Marshal(post)
+  if err != nil {
+    panic(err)
+  }
+
+  fmt.Printf("%s\n", b)
+  // Output: {"Description":null,"Likes":0,"Tags":[]}
+}
+```
+
 ---
 
 ## FAQ
