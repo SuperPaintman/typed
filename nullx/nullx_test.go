@@ -334,7 +334,7 @@ func TestNonNullableMap_UnmarshalJSON(t *testing.T) {
 			want: map[string]int{},
 		},
 		{
-			name: "slice",
+			name: "map",
 			v:    "{\"a\":1}",
 			want: map[string]int{"a": 1},
 		},
