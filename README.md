@@ -57,7 +57,7 @@ func main() {
 package main
 
 import (
-	"encoding/json"
+  "encoding/json"
   "fmt"
   "github.com/SuperPaintman/typed/nullx"
 )
